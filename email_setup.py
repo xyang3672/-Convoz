@@ -4,13 +4,13 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 
 #TODO: Create another script to automate the process.
-recipients = ["soyipo8862@dxecig.com", "gekij63337@dxecig.com"]
+recipients = ["zoombullies338@gmail.com" #additional emails here as strings, separated by commas]
 
 #TODO: Indiviualize emails to each participant depending on their meeting actions.
 for recipient in recipients:
     message = MIMEMultipart()
     message["Subject"] = "Summary of Your Meeting"
-    message["From"] = "goonba6969@gmail.com"
+    message["From"] = "zoombullies338@gmail.com"
     message["To"] = recipient
     html = """\
     <html>    
@@ -39,7 +39,7 @@ for recipient in recipients:
     context = ssl.create_default_context()
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login("goonba6969@gmail.com", "CS338sux")
+        server.login("zoombullies338@gmail.com", "compsci21")
         server.sendmail(
-            "goonba6969@gmail.com", recipient, message.as_string()
+            "zoombullies338@gmail.com", recipient, message.as_string()
         )
