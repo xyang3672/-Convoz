@@ -23,3 +23,22 @@ print(output)
 # load transcript
 # for each line, store them into a dictionary with user and text
 # ta.tone_chat(chat).get_result()
+
+
+
+
+# email(json)
+
+
+# {user: 'name'
+# assessment: 0 to 100
+# bully: 0 or 1
+# emotion: anger, impolite, joy (most used emotions)
+
+# }
+
+
+
+# html
+
+# php and flask
