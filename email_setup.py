@@ -26,8 +26,14 @@ for recipient in recipients:
        <h3 style ="color:#17B50E; text-align: left; padding-left: 40px; font-weight: normal"> {7} </h3>
        <h3 style ="color:#E37100; text-align: left; padding-left: 40px; font-weight: normal"> {8} </h3>
        <hr>
-       <h2 style ="color:black; text-align: left"> Speaking Times: </h2>
+       <h2 style ="color:black; text-align: left"> What to focus on for next time: </h2>
        <h3 style ="color:black; text-align: left; font-weight: normal; padding-left: 40px;"> {4}</h3>
+       <div id="test">
+       </div>
+       <script>
+         fetch(scratch.json).then(response => response.json())
+.then(data => { document.querySelector(#test).innerText = data.sentence})
+       </script>
     </html>
     """.format("99999", "2-19-21", "8:46 PM", "Attendees here",
                " Equal distribution, Good job!", "filler", "Speaking Emotions:", "excited", "impolite")
