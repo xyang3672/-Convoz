@@ -7,11 +7,13 @@
 # recordings to the speech to text service
 
 import pyaudio
+import joblib
 from ibm_watson import SpeechToTextV1
 from ibm_watson.websocket import RecognizeCallback, AudioSource
 from threading import Thread
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson import ToneAnalyzerV3
+import json
 
 try:
     from Queue import Queue, Full
@@ -41,20 +43,30 @@ authenticator1 = IAMAuthenticator('Rwqm8kJI4m23ErDDUETNmrfLIQYQk1mEZQdk3bJ2yGgP'
 speech_to_text = SpeechToTextV1(authenticator=authenticator)
 ta = ToneAnalyzerV3(version='2017-09-21', authenticator=authenticator1)
 ta.set_service_url('https://api.us-south.tone-analyzer.watson.cloud.ibm.com/instances/da1b4bd0-109f-496a-a543-6b734fcca3b7')
-# speech_to_text.set_service_url('https://api.us-south.speech-to-text.watson.cloud.ibm.com/instances/bd0275f5-d742-454f-afb1-0070d3b12ee3')
+speech_to_text.set_service_url('https://api.us-south.speech-to-text.watson.cloud.ibm.com/instances/bd0275f5-d742-454f-afb1-0070d3b12ee3')
+
+model = joblib.load('bully_model.sav')
 
 # define callback for the speech to text service
 class MyRecognizeCallback(RecognizeCallback):
     def __init__(self):
         RecognizeCallback.__init__(self)
         self.everything = []
+        self.bully_count = 0
 
     def on_transcription(self, transcript):
         t = transcript[0]['transcript']
         print(t)
+        if model.predict([t]) == 1:
+            print('Bully detected')
+            self.bully_count += 1
+            tone = ta.tone_chat([{'text': t}]).get_result()
+            try:
+                tone = tone['utterances_tone'][0]['tones'][0]['tone_id']
+                print('Tone: ' + tone)
+            except:
+                pass
         self.everything.append(t)
-        tone = ta.tone(t).get_result()
-        print(tone)
     def on_connected(self):
         print('Connection was successful')
 
@@ -76,6 +88,10 @@ class MyRecognizeCallback(RecognizeCallback):
         # print(data)
 
     def on_close(self):
+        res = {'speech': self.everything, 'count': self.bully_count }
+        file = open('email_data.json', "w")
+        json.dump(res, file)
+        file.close()
         print(self.everything)
         print("Connection closed")
 

@@ -1,0 +1,11 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div id = "test"></div>
+        <script>
+            fetch("email_data.json").then(response => response.json()).then(data => {document.querySelector("#test").innerText = data.speech})
+        </script>
+    </body>
+</html>

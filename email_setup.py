@@ -4,7 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 
 #TODO: Create another script to automate the process.
-recipients = ["soyipo8862@dxecig.com", "gekij63337@dxecig.com"]
+recipients = ["convoztesting@gmail.com", "gekij63337@dxecig.com"]
 
 #TODO: Indiviualize emails to each participant depending on their meeting actions.
 for recipient in recipients:
@@ -13,7 +13,8 @@ for recipient in recipients:
     message["From"] = "goonba6969@gmail.com"
     message["To"] = recipient
     html = """\
-    <html>    
+    <html>
+        <head> </head>
        <h1 style="text-align: center">Today's Meeting</h1>
        <hr>
        <h2 style ="text-align: left;">For meeting <span style="color:#A53FD2; font-weight: normal">{0}</span> on
@@ -28,9 +29,12 @@ for recipient in recipients:
        <hr>
        <h2 style ="color:black; text-align: left"> Speaking Times: </h2>
        <h3 style ="color:black; text-align: left; font-weight: normal; padding-left: 40px;"> {4}</h3>
+       <script>
+
+       </script>
     </html>
     """.format("99999", "2-19-21", "8:46 PM", "Attendees here",
-               " Equal distribution, Good job!", "filler", "Speaking Emotions:", "excited", "impolite")
+               " Equal distribution, Good job!", "filler", "Speaking Emotions:", "frustrated", "impolite")
 
     part = MIMEText(html, "html")
 

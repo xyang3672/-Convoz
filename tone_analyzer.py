@@ -16,29 +16,7 @@ chat = [
     {'text': 'You are dumb',
          'user': 'DEF'}
 ]
-res = ta.tone('I am feeling amazing').get_result()
-output = ta.tone_chat(chat).get_result()
-print(output)
-
-# load transcript
-# for each line, store them into a dictionary with user and text
-# ta.tone_chat(chat).get_result()
-
-
-
-
-# email(json)
-
-
-# {user: 'name'
-# assessment: 0 to 100
-# bully: 0 or 1
-# emotion: anger, impolite, joy (most used emotions)
-
-# }
-
-
-
-# html
-
-# php and flask
+res = ta.tone_chat([{'text': 'You suck'}]).get_result()
+# output = ta.tone_chat(chat).get_result()
+print(res['utterances_tone'][0]['tones'][:]['tone_id'])
+# print(output)
