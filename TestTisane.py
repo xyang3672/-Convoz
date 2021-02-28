@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 import http.client, urllib.request, urllib.parse, urllib.error, base64
-
+import json 
+import string
 headers = {
     # Request headers
     'Content-Type': 'application/json',
@@ -13,10 +14,19 @@ params = urllib.parse.urlencode({
 
 try:
     conn = http.client.HTTPSConnection('api.tisane.ai')
-    conn.request("POST", "/parse?%s" % params, '{"content":"i hate u","language":"en"}', headers)
+    t = "you're a nice smile! Nice!"
+    t = t.replace("'","")
+    cool = '{"content":' + '"' + t + '"' + ',"language":"en", "settings":{"parses":false}}'
+    conn.request("POST", "/parse?%s" % params, cool, headers)
     response = conn.getresponse()
     data = response.read()
     print(data)
+    test_string = str(data)[2:-1]
+    print(test_string)
+    res = json.loads(test_string)
+    print(res)
+    # print(res['text'])
+    # print (res['abuse'])
     conn.close()
 except Exception as e:
     print("[Errno {0}] {1}".format(e.errno, e.strerror))

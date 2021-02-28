@@ -14,6 +14,8 @@ from threading import Thread
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson import ToneAnalyzerV3
 import json
+import http.client, urllib.request, urllib.parse, urllib.error, base64
+
 
 try:
     from Queue import Queue, Full
@@ -47,6 +49,16 @@ speech_to_text.set_service_url('https://api.us-south.speech-to-text.watson.cloud
 
 model = joblib.load('bully_model.sav')
 
+headers = {
+    # Request headers
+    'Content-Type': 'application/json',
+    'Ocp-Apim-Subscription-Key': '627c2268f99740fd98c9007b59ad45e2'
+}
+params = urllib.parse.urlencode({
+})
+
+conn = http.client.HTTPSConnection('api.tisane.ai')
+
 # define callback for the speech to text service
 class MyRecognizeCallback(RecognizeCallback):
     def __init__(self):
@@ -57,15 +69,30 @@ class MyRecognizeCallback(RecognizeCallback):
     def on_transcription(self, transcript):
         t = transcript[0]['transcript']
         print(t)
-        if model.predict([t]) == 1:
-            print('Bully detected')
-            self.bully_count += 1
-            tone = ta.tone_chat([{'text': t}]).get_result()
-            try:
-                tone = tone['utterances_tone'][0]['tones'][0]['tone_id']
-                print('Tone: ' + tone)
-            except:
-                pass
+        t = t.replace("'","")
+        s = '{"content":' + '"' + t + '"' + ',"language":"en", "settings":{"parses":false}}'
+        conn.request("POST", "/parse?%s" % params, s, headers)
+        response = conn.getresponse()
+        data = response.read()
+        test_string = str(data)[2:-1]
+        res = json.loads(test_string)
+        print(res)
+        
+        # if model.predict([t]) == 1:
+        #     print('Bully detected')
+        #     self.bully_count += 1
+        #     tone = ta.tone_chat([{'text': t}]).get_result()
+        #     try:
+        #         tone = tone['utterances_tone'][0]['tones'][0]['tone_id']
+        #         print('Tone: ' + tone)
+        #     except:
+        #         pass
+        if 'abuse' in res:
+            print('Severity: ' + res['abuse'][0]['severity'])
+            print('Offense: ' + res['abuse'][0]['type'])
+            if res['abuse'][0]['severity'] != 'low':
+                print('BULLY DETECTED')
+
         self.everything.append(t)
     def on_connected(self):
         print('Connection was successful')
