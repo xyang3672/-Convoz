@@ -2,16 +2,20 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
+import json
 
-#TODO: Create another script to automate the process.
-recipients = ["zoombullies338@gmail.com" #additional emails here as strings, separated by commas]
+with open('/Users/jaewon/Library/Application Support/JetBrains/PyCharm2020.3/scratches/scratch.json') as f:
+    data = json.load(f)
+print(data)
+print(type(data))
 
-#TODO: Indiviualize emails to each participant depending on their meeting actions.
-for recipient in recipients:
+#TODO: Finalize the user data to be sent in the email.
+for recipient in data:
+    print(data[recipient]['email'])
     message = MIMEMultipart()
     message["Subject"] = "Summary of Your Meeting"
     message["From"] = "zoombullies338@gmail.com"
-    message["To"] = recipient
+    message["To"] = data[recipient]['email']
     html = """\
     <html>    
        <h1 style="text-align: center">Today's Meeting</h1>
@@ -30,12 +34,8 @@ for recipient in recipients:
        <h3 style ="color:black; text-align: left; font-weight: normal; padding-left: 40px;"> {4}</h3>
        <div id="test">
        </div>
-       <script>
-         fetch(scratch.json).then(response => response.json())
-.then(data => { document.querySelector(#test).innerText = data.sentence})
-       </script>
     </html>
-    """.format("99999", "2-19-21", "8:46 PM", "Attendees here",
+    """.format(data[recipient]['level'], "2-19-21", "8:46 PM", "Attendees here",
                " Equal distribution, Good job!", "filler", "Speaking Emotions:", "excited", "impolite")
 
     part = MIMEText(html, "html")
@@ -47,5 +47,5 @@ for recipient in recipients:
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login("zoombullies338@gmail.com", "compsci21")
         server.sendmail(
-            "zoombullies338@gmail.com", recipient, message.as_string()
+            "zoombullies338@gmail.com", data[recipient]['email'], message.as_string()
         )
