@@ -21,6 +21,6 @@ from oauthlib.oauth2 import BackendApplicationClient
 
 #go to https://zoom.us/oauth/authorize?client_id=1KaFjUkRTiYql5TLITaQg&response_type=code&redirect_uri=http://localhost:8080/ 
 #get the code in code='' from URL
-token = Transcript(meeting_id=97807885687, client_key='1KaFjUkRTiYql5TLITaQg', client_secret='TD6jX17FnhOK3hugjYFjT54c5cXcPzJ7', code='hX4aiMUUYa_7XXbaVrzT5euLxvRs5JoXw')
+token = Transcript(meeting_id=97807885687, client_key='1KaFjUkRTiYql5TLITaQg', client_secret='TD6jX17FnhOK3hugjYFjT54c5cXcPzJ7', code='z20RKdpFEl_7XXbaVrzT5euLxvRs5JoXw')
 trans = token.GetTranscript()
 print(trans)

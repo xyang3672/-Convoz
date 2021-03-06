@@ -68,7 +68,7 @@ class Transcript():
 
         # Getting the access token
         access_token_headers = { "Authorization": "Basic {authorization}".format(authorization=authorization) }
-        request_endpoint = "/oauth/token?grant_type=authorization_code&code={code}&redirect_uri=https://jun-li8.github.io/".format(code=self.code)
+        request_endpoint = "/oauth/token?grant_type=authorization_code&code={code}&redirect_uri=https://80a3bb863001.ngrok.io".format(code=self.code)
         print(request_endpoint)
         self.conn.request("POST", request_endpoint, headers=access_token_headers)
         res = self.conn.getresponse()
