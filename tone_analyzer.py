@@ -16,7 +16,8 @@ chat = [
     {'text': 'You are dumb',
          'user': 'DEF'}
 ]
-res = ta.tone_chat([{'text': 'You suck'}]).get_result()
+res = ta.tone_chat([{'text': 'I hate y0u.'}]).get_result()
+print(res)
 # output = ta.tone_chat(chat).get_result()
-print(res['utterances_tone'][0]['tones'][:]['tone_id'])
+print(res['utterances_tone'][0]['tones'][0]['tone_id'])
 # print(output)

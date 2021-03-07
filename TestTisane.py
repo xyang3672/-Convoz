@@ -2,6 +2,7 @@
 
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 import json 
+import ast
 import string
 headers = {
     # Request headers
@@ -17,15 +18,15 @@ try:
     t = "you're a nice smile! Nice!"
     t = t.replace("'","")
     cool = '{"content":' + '"' + t + '"' + ',"language":"en", "settings":{"parses":false}}'
+    # cool1 = str({"language": "en", "content": '"' + t + '"', "settings": {}})
     conn.request("POST", "/parse?%s" % params, cool, headers)
     response = conn.getresponse()
     data = response.read()
     print(data)
-    test_string = str(data)[2:-1]
-    print(test_string)
-    res = json.loads(test_string)
+    test_string = str(data, 'utf-8')
+    res = ast.literal_eval(test_string) 
     print(res)
-    # print(res['text'])
+    print(res['text'])
     # print (res['abuse'])
     conn.close()
 except Exception as e:

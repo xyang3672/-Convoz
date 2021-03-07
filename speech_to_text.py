@@ -81,6 +81,7 @@ class MyRecognizeCallback(RecognizeCallback):
         conn.request("POST", "/parse?%s" % params, s, headers)
         response = conn.getresponse()
         data = response.read()
+        
         test_string = str(data)[2:-1]
         res = json.loads(test_string)
         if 'abuse' in res:
