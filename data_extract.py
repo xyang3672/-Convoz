@@ -7,6 +7,8 @@ import ast
 from ibm_watson import ToneAnalyzerV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
+import json
+
 apikey = 'Rwqm8kJI4m23ErDDUETNmrfLIQYQk1mEZQdk3bJ2yGgP'
 url = 'https://api.us-south.tone-analyzer.watson.cloud.ibm.com/instances/da1b4bd0-109f-496a-a543-6b734fcca3b7'
 
@@ -39,7 +41,6 @@ def get_data(text):
     try: 
         data[0] = res['abuse'][0]['type']
         data[1] = res['abuse'][0]['severity']
-
     except:
         pass
     try:
@@ -49,7 +50,7 @@ def get_data(text):
         pass
     return data
 person = {
-    'total': {'duration': 0, 'count':'0'},
+    'total': {'duration': 0, 'count':0},
     'speech':{
         # text: (bullying_type, )
 
@@ -60,10 +61,15 @@ everyone = defaultdict(lambda:person)
 for caption in webvtt.read('97807885687_audio_transcript.vtt'):
     text= caption.text.split(':')
     data = get_data(text[1])
+    if data[1] != 'low' and data[1] != None:
+        everyone[text[0]]['total']['count'] += 1
     duration = time_to_int(caption.end) - time_to_int(caption.start)
     everyone[text[0]]['total']['duration'] += duration
     everyone[text[0]]['speech'][text[1]] = data
     print(duration)
     # print(caption.start - caption.end)
 everyone = dict(everyone)
+report_data = open("report_data.json","w")
+json.dump(everyone,report_data)
 print(everyone)
+report_data.close()
