@@ -21,6 +21,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         data = json.loads(post_data)
         if data["event"] == "recording.transcript_completed":
+            print('cool')
             date = data["payload"]["object"]["start_time"].split("T")[0]
             file_name = "{date}_audio_transcript.vtt".format(date=date)
             for recording_file in data["payload"]["object"]["recording_files"]:
@@ -33,13 +34,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                     
                     transcript = requests.get(recording_file["download_url"], allow_redirects=True, headers=headers)
                     open(file_name, 'wb').write(transcript.content)
+                    print('done')
             
 
 def start_server(port):
     httpd = HTTPServer(('localhost', port), SimpleHTTPRequestHandler)
-    httpd.allow_reuse_address = True
-    local_tunnel_cmd = "lt -h \"https://serverless.social\" -p {port} -s my-subdomain".format(port=port)
-    threading.Thread(target=os.system, args=(local_tunnel_cmd,)).start()
+    # httpd.allow_reuse_address = True
+    # local_tunnel_cmd = "lt -h \"https://serverless.social\" -p {port} -s my-subdomain".format(port=port)
+    # threading.Thread(target=os.system, args=(local_tunnel_cmd,)).start()
     httpd.serve_forever()
 
 
