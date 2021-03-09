@@ -18,5 +18,3 @@ def mute_lol():
                 type_chat()
                 break
     # print(top_windows)
-
-mute_lol()
