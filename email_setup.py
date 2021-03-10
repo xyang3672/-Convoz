@@ -32,8 +32,7 @@ for recipient in data:
        <hr>
        <h2 style ="color:black; text-align: left"> What to focus on for next time: </h2>
        <h3 style ="color:black; text-align: left; font-weight: normal; padding-left: 40px;"> {4}</h3>
-       <div id="test">
-       </div>
+       <a href="https://google.com" class="button">Go to Webpage</a>
     </html>
     """.format(data[recipient]['level'], "2-19-21", "8:46 PM", "Attendees here",
                " Equal distribution, Good job!", "filler", "Speaking Emotions:", "excited", "impolite")
