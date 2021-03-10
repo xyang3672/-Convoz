@@ -44,10 +44,5 @@ def sent_email(data):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login("zoombullies338@gmail.com", "compsci21")
         server.sendmail(
-<<<<<<< HEAD
-            "zoombullies338@gmail.com", data[recipient]['email'], message.as_string()
-        )
-=======
             "zoombullies338@gmail.com", data['email'], message.as_string()
         )
->>>>>>> e6200248f8fcb3641f4ab3fbf472a449a4944df4
