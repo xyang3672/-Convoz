@@ -1,4 +1,4 @@
-# +convoz
+# +Convoz
 An application that give you feedback on how good you are at participating in discussions on Zoom.
 Developed in order to create healthy conversations in discussions and team meetings
 
