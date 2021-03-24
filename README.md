@@ -15,3 +15,19 @@ Possible statistics we collect may include blatant insults, racial slurs, any ta
 Using that information, we will analyze the transcript of the meetings. Then our program will send a comprehensive report back to each participant via email or web application, quoting things that may have sounded negative, and overall how friendly the meeting was. 
 
 The host will be able to enable or disable the feature and the software will be activated only if the host allows. We will provide a compiled information of each individual to the host, allowing the host to view an overall performance during the meeting. However, each individual will only see his or her statistics to protect privacy. 
+
+# The System at an Architectural Level
+1. Speech to text
+  - Automatic zoom transcript
+  - Virtual mic to get output audio from zoom 
+  - IBM Watson speech recognition
+2. Cyberbullying Detection
+  - Tisane API
+  - ML model
+  - IBM Watson tone analyzer
+3. Intervention
+  - Analyze zoom output audio from the virtual mic 
+  - Comments negative environment using keyboard emulator 
+4. Email and Report
+  - Automatically sends email after transcript is finished
+  - Webpage for a more a detailed report on the zoom environment 
